@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textos</title>
+</head>
+<body>
+    <h2>Operações com textos</h2>
+
+    <!-- onkeyup indica o que vai acontecer logo após usar uma tecla qualquer -->
+    Digite uma frase: <input id="ipt_frase" onkeyup="analisar()">
+    <br><br>
+    <div id="div_result"></div>
+</body>
+</html>
+<script>
+    function analisar() {
+        var ax_frase = ipt_frase.value;
+        div_result.innerHTML = '';
+        
+
+
+        // .length retorna um número que é a quantidade de 
+        // caracteres digitados em um campo.
+        // OBS.: os espaços também são considerados 
+        div_result.innerHTML += `Quantidade de carcteres? ${ax_frase.length} <br>`;
+    
+
+
+        // startsWith('e') verifica se a variável começa com o(s) caracter(es) especificado   
+        div_result.innerHTML += `Ela começa com "e"? ${ax_frase.startsWith('e')} <br>`;
+       
+        div_result.innerHTML += `Ela começa com "e" ou "E"? ${ax_frase.startsWith('e') || 
+               ax_frase.startsWith('E')} <br>`;
+
+        div_result.innerHTML += `Começa com "amor"? ${ax_frase.startsWith('amor')} <br>`;  
+
+        div_result.innerHTML += `Começa com "O amor constroe"? ${ax_frase.startsWith('O amor constroe')} <br>`;   
+
+        div_result.innerHTML += `Começa com "13"? ${ax_frase.startsWith('13')} <br>`;   
+
+
+
+        // endsWith('e') verifica se a variável termina com o(s) caracter(es) especificado
+        div_result.innerHTML += `Termina com "a"? ${ax_frase.endsWith('a')} <br>`;   
+
+        div_result.innerHTML += `Termina com "preto"? ${ax_frase.endsWith('preto')} <br>`;
+
+
+
+        // para acessar uma posição específica basta passar o 
+        // o número da posição entre os colchetes.
+        // OBS.: Lembre-se que a primeira letra está na posição 0,
+        // a segunda letra na posição 1 e assim por diante, então,
+        // para acessar a 15ª letra você informará a posição 14
+        // campo[14]
+        div_result.innerHTML += `Qual é a 3ª letra? ${ax_frase[2]} <br>`;
+
+        div_result.innerHTML += `Qual é a 1ª letra? ${ax_frase[0]} <br>`;
+
+        div_result.innerHTML += `Qual é a última letra? ${ax_frase[ax_frase.length-1]} <br>`;
+
+
+
+        // indexOf retorna um número que é a posição onde o(s) 
+        // caracter(s) informado(s) foi(ram) encontrado(s) 
+        // NA PRIMEIRA VEZ
+        // LEMBRE: O indexOf retornar somente a posição da 
+        // PRIMEIRA VEZ
+        // OBS: Se não foi encontrado o(s) caractere(s) informado(s)
+        // o indexOf retorna -1
+        div_result.innerHTML += `Onde está o 1ª "@"? ${ax_frase.indexOf('@')} <br>`;
+
+        div_result.innerHTML += `Onde começa o 1º "kkk"? ${ax_frase.indexOf('kkk')} <br>`;
+
+
+
+        // Podemos atribuir os retornos à uma variável para 
+        // depois manipularmos essa variável de acordo com a 
+        // necessidade do programa.
+        var ax_pos = ax_frase.indexOf('am');
+        if (ax_pos < 0) {
+            div_result.innerHTML += `Onde começa o 1º "am"? - não existe <br>`;
+        } else {
+            div_result.innerHTML += `Onde começa o 1º "am"? ${ax_pos} <br>`;
+        }
+
+
+
+        // .toUpperCase e o .toLowerCase não alteram o conteúdo do
+        // campo, eles apenas retornam uma string com a conteúdo do 
+        // do campo em letras maiúsculas ou minúsculas 
+        // respectivamente.
+        div_result.innerHTML += `Como fica em maiusculo ${ax_frase.toUpperCase()} <br>`;
+
+        div_result.innerHTML += `Como fica em minusculo ${ax_frase.toLowerCase()} <br>`;
+
+        div_result.innerHTML += `A frase como ela é:  ${ax_frase} <br>`;
+
+    }
+    
+</script>

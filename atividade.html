@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrara</title>
+</head>
+
+<body>
+    <h1>Taxi Carrara</h1>
+    Entre com o nome do passageiro: <input id="ipt_nome">
+    <br><br>
+    Entre com a distancia para o destino: <input id="ipt_distancia">
+    <br><br>
+    Entre com a bandeira da corrida: <input id="ipt_bandeira">
+    <br><br>
+    Entre com o horário da corrida : <input id="ipt_horario">
+    <br><br>
+    <button onclick="validar()">Calcular a Corrida</button>
+    <br><br>
+    <div id="div_msg"></div>
+</body>
+
+</html>
+<script>
+    function validar() {
+        var ax_tem_erro = 'não';
+        var ax_resto = 0;
+        var ax_percentual = 0;
+
+        var ax_nome = ipt_nome.value;
+        var ax_distancia = Number(ipt_distancia.value);
+        var ax_bandeira = Number(ipt_bandeira.value);
+        var ax_horario = Number(ipt_horario.value);
+
+        ipt_nome.style = "border-color: black;";
+        ipt_distancia.style = "border-color: black;";
+        ipt_bandeira.style = "border-color: black;";
+        ipt_horario.style = "border-color: black;";
+
+        if (ax_nome == '') {
+            alert("Favor informar o nome do passageiro");
+            ipt_nome.style = "border-color: red;";
+            ax_tem_erro = 'sim';
+        }
+
+        if (ax_distancia <= 0) {
+            alert("informar corretamente a distancia");
+            ipt_distancia.style = "border-color: red;";
+            ax_tem_erro = 'sim';
+        } else if (ax_distancia >= 100) {
+            alert("viagens devem ser negociadas com a nossa central");
+            ipt_distancia.style = "border-color: red;";
+            ax_tem_erro = 'sim';
+        }
+
+        if (ax_bandeira != 1 && ax_bandeira != 2 && ax_bandeira != 3) {
+            alert("A bandeira tem que ser 1, 2 ou 3");
+            ipt_bandeira.style = "border-color: red;";
+            ax_tem_erro = 'sim';
+        }
+
+        if (ax_horario >= 0 && ax_horario <= 23) {
+        } else {
+            alert("O horário tem que estar entre 0 e 23");
+            ipt_horario.style = "border-color: red;";
+            ax_tem_erro = 'sim';
+        }
+        ax_resto = (ax_horario * 100) % 100;
+        if (ax_resto > 0) {
+            alert("O horário tem que ser um número inteiro");
+            ipt_horario.style = "border-color: red;";
+            ax_tem_erro = 'sim';
+        }
+    
+        if (ax_tem_erro == 'sim') {
+            div_msg.innerHTML = 'Favor corrigir o(s) dado(s) de entrada para seguirmos em frete';
+        } else {
+
+            if (ax_bandeira == 1) {
+                if (ax_horario <= 6) {
+                    ax_percentual = 1.075
+                } else if (ax_horario <= 12) {
+                    ax_percentual = 1.10
+                } else {
+                    ax_percentual = 1.125
+                }
+            } else if (ax_bandeira == 2) {
+                if (ax_horario <= 6) {
+                    ax_percentual = 1.10
+                } else if (ax_horario <= 12) {
+                    ax_percentual = 1.15
+                } else {
+                    ax_percentual = 1.20
+                }
+            } else {
+                if (ax_horario <= 6) {
+                    ax_percentual = 1.15
+                } else if (ax_horario <= 12) {
+                    ax_percentual = 1.30
+                } else {
+                    ax_percentual = 1.45
+                }
+            }
+            ax_valor = ax_distancia * 1.25 * ax_percentual
+            div_msg.innerHTML = `Olá, <b>${ax_nome}</b>. Sua corrida, será na bandeira <b>${ax_bandeira}</b>, 
+                percorrerá <b>${ax_distancia}</b> km e o total da corrida será de <b>
+                ${ax_valor}</b>`;
+            
+                div_msg.innerHTML += `<br><br>Se você efetuar o pagamento com PIX a corrida será de R$ <b>
+                        ${(ax_valor*0.975).toFixed(2)}</b> <br>
+                    Se você efetuar o pagamento em dinheiro a corrida será de R$ <b>
+                        ${ax_valor.toFixed(2)}</b> (favor facilitar o troco)<br>
+                    Se você efetuar o pagamento com cartão (débito ou crédito) a corrida será de R$ <b>
+                        ${(ax_valor*1.035).toFixed(2)}</b>`;
+
+        }
+    }
+</script>

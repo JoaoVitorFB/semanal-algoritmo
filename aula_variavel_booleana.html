@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula32 - Boolean - &&</title>
+</head>
+
+<body>
+
+    <h3>Análise de Aprovação dos Alunos</h3>
+
+    Entre com a média: <input id="ipt_media"> <br><br>
+    Entre com a frequência: <input id="ipt_freq"> <br><br>
+    <button onclick="analisar()">Analisar</button>
+
+</body>
+
+</html>
+<script>
+    //               VARIÁVEIS BOOLEANAS 
+    // As variáveis Booleanas só comportam true ou false
+    // Normalmente elas são geradas com o resultado de uma condição 
+    // e sempre devolverão o true ou false da condição que as originou
+
+    function analisar() {
+
+
+        // Testando duas variáveis booleanas com operador "e"  &&
+
+        // var ax_mediaOK = ipt_media.value >= 6;
+        // var ax_freqOK = ipt_freq.value >= 75; 
+        // if (ax_mediaOK && ax_freqOK) {
+        //     alert("Aluno aprovado")
+        // } else {
+        //     alert("Aluno reprovado")
+        // }
+
+
+
+        // Criando uma variável booleana com duas condições e operador e &&    
+
+        // var ax_result = ipt_media.value >= 6 && ipt_freq.value >= 75;
+        // if (ax_result == true) {
+        //     alert ("aluno aprovado");
+        // } else {
+        //     alert ("aluno reprovado");
+        // }
+
+
+
+        // Testando a variável booleana sem ==
+
+        // var ax_result = ipt_media.value >= 6 && ipt_freq.value >= 75;
+        // if (ax_result) {
+        //     alert ("aluno aprovado");
+        // } else {
+        //     alert ("aluno reprovado");
+        // }
+
+
+
+        // Variável booleana com duas condiçõe e operador ou ||
+        
+        var ax_result = ipt_media.value < 6 || ipt_freq.value < 75;
+        if (ax_result) {
+            alert ("aluno reprovado");
+        } else {
+            alert ("aluno aprovado");
+        }
+    }
+
+
+</script>
