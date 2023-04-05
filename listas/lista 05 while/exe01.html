@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    A cada quantos dias você faz musculação? <input type="text" id="ipt_frequencia"><br><br>
+    <button id="btn_calcular" onclick="calcular()" >Exibir rotina mensal</button><br><br>
+    <p id="p_retorno"></p>
+</body>
+</html>
+
+<script>
+
+function calcular() {
+    var dia = Number('-1');
+    var frequencia = ipt_frequencia.value;
+
+    p_retorno.innerHTML = ""
+
+    while (dia <= 28){
+        dia++
+    if (dia%frequencia == 0){
+        p_retorno.innerHTML += `Dia ${dia+1} - <b>Musculação</b><br>`
+        
+    } else{
+        p_retorno.innerHTML += `Dia ${dia+1} - Comer, dormir etc<br>`
+        
+    }
+    }
+
+
+}
+
+</script>

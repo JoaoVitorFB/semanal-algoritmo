@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Quantas pessoas vão entrar no carro? <input type="text" id="ipt_qtdPessoas"><br><br>
+    <button id="btn_calcular" onclick="calcular()" >Partiu Carona</button><br><br>
+    <p id="p_retorno"></p>
+</body>
+</html>
+
+<script>
+
+function calcular() {
+
+    qtdPessoas = ipt_qtdPessoas.value;
+    contagem = Number('-1');
+
+    while (contagem <= qtdPessoas){
+    contagem++
+
+    if (contagem <= 5){
+        if (contagem == 1){
+        p_retorno.innerHTML = `Entrou o ${contagem}º passageiro (que é o(a) motorista)<br>`;} else {
+        p_retorno.innerHTML += `Entrou o ${contagem}º passageiro<br>`;}
+    } else{  
+        p_retorno.innerHTML += `O ${contagem}º passageiro terá que esperar!<br>`;
+    }
+
+    }
+}
+
+</script>
