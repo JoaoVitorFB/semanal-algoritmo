@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="display1">
+        Digite o nome do usuário: <input type="text" id="ipt_usuario"><br><br>
+        Digite o objetivo: <input type="text" id="ipt_objetivo"><br><br>
+        Digite o valor do objetivo: <input type="text" id="ipt_valObjetivo"
+            placeholder="Deve ser maior que 100 e menor que 1000"><br><br>
+        <button onclick="etapa1()">Avançar</button><br><br><br>
+    </div>
+    <div id="display2">
+        <p id="p_retorno"></p>
+        <p id="p_mensagem"></p>
+        <p id="p_mensagem2"></p>
+        <p id="p_mensagem3"></p><br>
+        <button id="btn_guardar" onclick="guardar()">Guardar R$5,00</button><br><br>
+        <button id="btn_retirar" onclick="retirar()">Retirar R$10,00</button><br><br>
+        <button onclick="etapa2()">Avançar</button><br>
+    </div>
+    <div id="display3">
+        <h1>Resumo da Jornada</h1>
+        <p id="p_resumo"></p>
+    </div>
+</body>
+
+</html>
+
+<script>
+    display1.style.display = 'block';
+    display2.style.display = 'none';
+    display3.style.display = 'none';
+
+
+    var usuario = '';
+    var objetivo = '';
+    var valObjetivo = 0;
+    var validar = '';
+    var conta = Number('0');
+    var clickRetirar = Number('0');
+    var clickGuardar = Number('0');
+
+    ipt_usuario.style = "border-color: none;";
+    ipt_objetivo.style = "border-color: none;";
+    ipt_valObjetivo.style = "border-color: none;";
+
+
+    function etapa1() {
+        usuario = ipt_usuario.value;
+        objetivo = ipt_objetivo.value;
+        valObjetivo = ipt_valObjetivo.value;
+        var validar = '';
+
+        if (usuario.length < 5) {
+            alert("Informar corretamente o nome do usuário");
+            ipt_usuario.style = "border-color: red;";
+            var validar = 'erro';
+        } else {
+            ipt_usuario.style = "border-color: none;";
+        }
+
+        if (objetivo.startsWith('Comprar') || objetivo.startsWith('Adquirir') || objetivo.startsWith('Importar') || objetivo.startsWith('Arrendar')) {
+            ipt_objetivo.style = "border-color: none;";
+        } else {
+            alert("Informar corretamente o objetivo");
+            ipt_objetivo.style = "border-color: red;";
+            var validar = 'erro';
+        }
+
+        if (valObjetivo > 100 && valObjetivo < 1000) {
+            ipt_valObjetivo.style = "border-color: none;";
+        } else {
+            if (valObjetivo <= 100) {
+                alert("Vamos lá... Você quer poupar ou não?!!!");
+                ipt_valObjetivo.style = "border-color: red;";
+                var validar = 'erro';
+            } else {
+                if (valObjetivo >= 0) {
+                    alert("Calma.... esse valor é só quando você estiver estagiando");
+                    ipt_valObjetivo.style = "border-color: red;";
+                    var validar = 'erro';
+                }
+            }
+        }
+
+        if (validar == 'erro') {
+            display1.style.display = 'block';
+        } else {
+            display1.style.display = 'none';
+            display2.style.display = 'block';
+            p_retorno.innerHTML = `Sr(a) ${usuario}, você tem guardado: R$${conta.toFixed(2)}`;
+        }
+    }
+
+    p_mensagem.innerHTML = `<p style="color: blue;">Finanças OK! – continue assim para atingir o objetivo</p>`
+
+    function guardar() {
+        clickGuardar++
+        conta = conta + 5
+        p_retorno.innerHTML = `Sr(a) ${usuario}, você tem guardado: R$${conta.toFixed(2)}`;
+
+        if (conta == valObjetivo) {
+            alert(`PARABÉNS, ${usuario}!!! Você atingiu a meta de R$${valObjetivo} e agora poderá ${objetivo}.`)
+            p_mensagem2.innerHTML = ""
+            p_mensagem.innerHTML = ""
+            display1.style.display = 'none';
+            display2.style.display = 'none';
+            display3.style.display = 'block';
+            p_resumo.innerHTML = `Nome: ${usuario}<br><br>`
+            p_resumo.innerHTML += `Objetivo: ${objetivo}<br><br>`
+            p_resumo.innerHTML += `Valor Guardado: ${valObjetivo}<br><br>`
+            p_resumo.innerHTML += `Quantidade de depositos: ${clickGuardar}<br><br>`
+            p_resumo.innerHTML += `Quantidade de retiradas: ${clickRetirar}<br><br>`
+            p_resumo.innerHTML += `Se você não tivesse feito retiradas você teria hoje: R$${clickGuardar*5}<br><br>`
+    
+        } else {
+            if (conta > 80) {
+                p_mensagem.innerHTML = `<p style="color: blue;">Finanças OK! – continue assim para atingir o objetivo</p>`
+                p_mensagem2.innerHTML = `MUITO BEM!!! – você está próximo do objetivo`
+                p_mensagem3.innerHTML = ""
+            } else if (conta >= 0) {
+                p_mensagem.innerHTML = `<p style="color: blue;">Finanças OK! – continue assim para atingir o objetivo</p>`
+                p_mensagem2.innerHTML = ""
+                p_mensagem3.innerHTML = ""
+            } else if (conta < -20) {
+                p_mensagem.innerHTML = `<p style="color: red;">Finanças em perigo!</p>`
+                p_mensagem2.innerHTML = `${usuario} quase no SERASA!`
+                p_mensagem3.innerHTML = ""
+            } else {
+                p_mensagem.innerHTML = `<p style="color: red;">Finanças em perigo!</p>`
+                p_mensagem3.innerHTML = ""
+            }
+        }
+
+    }
+
+    function retirar() {
+        clickRetirar++
+        conta = conta - 10
+        p_retorno.innerHTML = `Sr(a) ${usuario}, você tem guardado: R$${conta.toFixed(2)}`;
+
+        if (conta == valObjetivo) {
+            alert(`PARABÉNS, ${usuario}!!! Você atingiu a meta de R$${valObjetivo} e agora poderá ${objetivo}.`)
+            p_mensagem2.innerHTML = ""
+            p_mensagem.innerHTML = ""
+            display1.style.display = 'none';
+            display2.style.display = 'none';
+            display3.style.display = 'block';
+            p_resumo.innerHTML = `Nome: ${usuario}<br><br>`
+            p_resumo.innerHTML += `Objetivo: ${objetivo}<br><br>`
+            p_resumo.innerHTML += `Valor Guardado: ${valObjetivo}<br><br>`
+            p_resumo.innerHTML += `Quantidade de depositos: ${clickGuardar}<br><br>`
+            p_resumo.innerHTML += `Quantidade de retiradas: ${clickRetirar}<br><br>`
+            p_resumo.innerHTML += `Se você não tivesse feito retiradas você teria hoje: R$${clickGuardar*5}<br><br>`
+
+        } else {
+            if (conta > 80) {
+                p_mensagem.innerHTML = `<p style="color: blue;">Finanças OK! – continue assim para atingir o objetivo</p>`
+                p_mensagem2.innerHTML = `MUITO BEM!!! – você está próximo do objetivo`
+                p_mensagem3.innerHTML = ""
+            } else if (conta >= 0) {
+                p_mensagem.innerHTML = `<p style="color: blue;">Finanças OK! – continue assim para atingir o objetivo</p>`
+                p_mensagem2.innerHTML = ""
+                p_mensagem3.innerHTML = ""
+            } else if (conta < -20) {
+                p_mensagem.innerHTML = `<p style="color: red;">Finanças em perigo!</p>`
+                p_mensagem2.innerHTML = `${usuario} quase no SERASA!`
+                p_mensagem3.innerHTML = ""
+            } else {
+                p_mensagem.innerHTML = `<p style="color: red;">Finanças em perigo!</p>`
+                p_mensagem3.innerHTML = ""
+            }
+        }
+    }
+
+        
+
+
+
+
+</script>
