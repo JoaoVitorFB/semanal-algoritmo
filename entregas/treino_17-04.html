@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camisetas SDA</title>
+</head>
+
+<body>
+    <div id="telaInicial">
+        <h1>SDA - AS MELHORES CAMISETAS DO BRASIL</h1>
+        <p>Digite a quantidade de camisetas desejadas:</p> <input type="text" id="ipt_camisetasDesejadas"><br><br>
+        <select name="tamanhoCamiseta" id="slt_tamanhoCamiseta">
+            <option value="Pequena">Pequena</option>
+            <option value="Grande">Grande</option>
+        </select><br><br>
+        <select name="tipoCamiseta" id="slt_tipoCamiseta">
+            <option value="Colorida">Camiseta colorida</option>
+            <option value="Branca">Camiseta branca</option>
+        </select><br>
+        <p>Digite a distância para entrega:</p> <input type="text" id="ipt_distanciaEntrega"><br><br>
+        <button id="btn_orcar" onclick="calcular()">Orçar</button>
+    </div>
+    <div id="orcamento">
+        <p id="p_retorno"></p>
+        <button id="btn_extrato" onclick="extrato()">Extrato completo</button>
+        <p id="p_extrato"></p>
+        <button id="btn_reset" onclick="reset()">Reset</button>
+    </div>
+</body>
+
+</html>
+<script>
+    btn_orcar.style.display = "block";
+    btn_extrato.style.display = "none";
+    btn_reset.style.display = "none";
+
+    var camisetasDesejadas = Number(0);
+    var tamanhoCamiseta = "";
+    var tipoCamiseta = "";
+    var distanciaEntrega = Number(0);
+    var erro = Number(0);
+    const valorCamiseta = {
+        brancaPequena: Number(15),
+        brancaGrande: Number(16),
+        coloridaPequena: Number(17),
+        coloridaGrande: Number(18)
+    }
+    var totalVenda = Number(0);
+
+    function calcular() {
+        p_retorno.innerHTML = "";
+        camisetasDesejadas = Number(ipt_camisetasDesejadas.value);
+        tamanhoCamiseta = slt_tamanhoCamiseta.value;
+        tipoCamiseta = slt_tipoCamiseta.value;
+        distanciaEntrega = Number(ipt_distanciaEntrega.value);
+
+        if (camisetasDesejadas < 100) {
+            alert("Vendemos somente no atacado")
+            erro++
+        } else if (camisetasDesejadas > 2000) {
+            alert("Consulte nosso PCP (planejamento e controle da produção)")
+            erro++
+        }
+
+        if (distanciaEntrega <= 0) {
+            alert("Informar a distância de entrega")
+            erro++
+        }
+
+        if (erro == 0) {
+            btn_orcar.style.display = "none";
+            btn_extrato.style.display = "block";
+            btn_reset.style.display = "block";
+
+            p_retorno.innerHTML += `<h3>Orçamento de vendas</h3>
+            <p>Quantidade solicitada: ${camisetasDesejadas}</p>
+            <p>Produto selecionado: ${tipoCamiseta}</p>
+            <p>Tamanho selecionado: ${tamanhoCamiseta}</p>`;
+
+            if (tamanhoCamiseta == "Pequena" && tipoCamiseta == "Branca") {
+                totalVenda = camisetasDesejadas * valorCamiseta.brancaPequena;
+
+                p_retorno.innerHTML += `<p>O valor total das mercadorias é de R$${totalVenda}</p>`
+
+            } else if (tamanhoCamiseta == "Pequena" && tipoCamiseta == "Colorida") {
+                totalVenda = camisetasDesejadas * valorCamiseta.coloridaPequena;
+
+                p_retorno.innerHTML += `<p>O valor total das mercadorias é de R$${totalVenda}</p>`
+
+            } else if (tamanhoCamiseta == "Grande" && tipoCamiseta == "Branca") {
+                totalVenda = camisetasDesejadas * valorCamiseta.brancaGrande;
+
+                p_retorno.innerHTML += `<p>O valor total das mercadorias é de R$${totalVenda}</p>`
+            } else if (tamanhoCamiseta == "Grande" && tipoCamiseta == "Colorida") {
+                totalVenda = camisetasDesejadas * valorCamiseta.coloridaGrande;
+
+                p_retorno.innerHTML += `<p>O valor total das mercadorias é de R$${totalVenda}</p>`
+            } else { }
+
+            if (distanciaEntrega > 67) {
+                p_retorno.innerHTML += `<p>Para essa distância será cobrado um adicional de R$${(0.07 * totalVenda).toFixed(2)} para entrega</p>`
+            }
+
+
+
+
+
+        }
+    }
+
+    function extrato() {
+        contador = Number(1);
+
+        while (contador <= camisetasDesejadas) {
+            if (tamanhoCamiseta == "Pequena" && tipoCamiseta == "Branca") {
+                p_extrato.innerHTML += `${contador}° camiseta branca de tamanho pequena, vendida por ${valorCamiseta.brancaPequena}, totalizando R$${contador*valorCamiseta.brancaPequena}<br>`;
+            } else if (tamanhoCamiseta == "Pequena" && tipoCamiseta == "Colorida") {
+                p_extrato.innerHTML += `${contador}° camiseta colorida de tamanho pequena, vendida por ${valorCamiseta.coloridaPequena}, totalizando R$${contador*valorCamiseta.coloridaPequena}<br>`;
+
+            } else if (tamanhoCamiseta == "Grande" && tipoCamiseta == "Branca") {
+                p_extrato.innerHTML += `${contador}° camiseta branca de tamanho grande, vendida por ${valorCamiseta.brancaGrande}, totalizando R$${contador*valorCamiseta.brancaGrande}<br>`;
+            } else if (tamanhoCamiseta == "Grande" && tipoCamiseta == "Colorida") {
+                p_extrato.innerHTML += `${contador}° camiseta branca de tamanho pequena, vendida por ${valorCamiseta.coloridaGrande}, totalizando R$${contador*valorCamiseta.coloridaGrande}<br>`;
+            } else { }
+            contador++
+        }
+    }
+
+    function reset(){
+        p_retorno.innerHTML = "";
+        p_extrato.innerHTML = "";
+        btn_orcar.style.display = "block";
+    btn_extrato.style.display = "none";
+    btn_reset.style.display = "none";
+    }
+</script>

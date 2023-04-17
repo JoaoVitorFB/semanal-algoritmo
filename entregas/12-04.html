@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-vr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de divisibilidade</title>
+</head>
+
+<body>
+    Insira o valor de início da amostra: <input type="text" id="ipt_inicio" placeholder="maior que 20"><br><br>
+    Insira o valor de limite da amostra: <input type="text" id="ipt_limite"><br><br>
+    Insira um valor para teste de divisibilidade: <input type="text" id="ipt_div1" placeholder="entre 3 e 20"><br><br>
+    Insira outro valor para teste de divisibilidade: <input type="text" id="ipt_div2"
+    placeholder="entre 3 e 20"><br><br>
+    <button onclick="calcular()">Mostrar</button><br><br>
+    <p id="p_retorno"></p>
+</body>
+
+</html>
+<script>
+    
+    function calcular() {
+        p_retorno.innerHTML = "";
+        var inicio = Number(ipt_inicio.value);
+        var limite = Number(ipt_limite.value);
+        var div1 = Number(ipt_div1.value);
+        var div2 = Number(ipt_div2.value);
+        var erro = Number(0);
+        var contador = Number(0);
+        var divisiveis = Number(0);
+        var totalExibidos = Number(0);
+        var maiorExibido = Number(0);
+        var menorExibido = Number(0);
+
+        
+        if (inicio == "") {
+            alert("Digite o valor de início da amostra")
+            erro++
+        } else if (inicio <= 20) {
+            alert("O valor de inicio deve ser maior que 20")
+            erro++
+        } else{}
+
+        if (limite == "") {
+            alert("Digite o valor limite da amostra")
+            erro++
+        } else if (limite < inicio || limite >= 1000) {
+            alert("Limite superior invalido, verifique o conteúdo")
+            erro++
+        } else{}
+
+        if (div1 == "") {
+            alert("Insira o primeiro valor para teste de divisibilidade")
+            erro++
+        } else if (div1 < 3 || div1 > 20) {
+            alert("Primeiro número para teste de divisibilidade tem que estar entre 3 e 20")
+            erro++
+        } else{}
+        
+        if (div2 == "") {
+            alert("Insira o segundo valor para teste de divisibilidade")
+            erro++
+        } else if (div2 < 3 || div2 > 20 || div2 == div1) {
+            alert("Segundo número para teste de divisibilidade tem que estar entre 3 e 20 e ser diferente do primeiro")
+            erro++
+        } else{}
+        
+
+        if (erro == 0) {
+
+            contador = inicio;
+
+            while (contador <= limite){
+                if (contador % div1 == 0 && contador % div2 == 0){
+                    p_retorno.innerHTML += `O número ${contador} é divisível pelo primeiro e pelo segundo número<br>`;
+                    divisiveis++
+                        
+                    if (menorExibido == 0){
+                        menorExibido = contador
+                    }
+
+                    maiorExibido = contador;
+                    totalExibidos = totalExibidos + contador;
+                } else if (contador % div1 == 0){
+                    p_retorno.innerHTML += `O número ${contador} é divisível pelo primeiro número<br>`;
+                    divisiveis++
+
+                    if (menorExibido == 0){
+                        menorExibido = contador
+                    }
+
+                    maiorExibido = contador;
+                    totalExibidos = totalExibidos + contador;
+                } else if (contador % div2 == 0){
+                    p_retorno.innerHTML += `O número ${contador} é divisível pelo segundo número<br>`;
+                    divisiveis++
+
+                    if (menorExibido == 0){
+                        menorExibido = contador
+                    }
+
+                    maiorExibido = contador;
+                    totalExibidos = totalExibidos + contador;
+                } else{}
+
+                
+                contador++
+            }
+
+
+            if (divisiveis == 0){
+                p_retorno.innerHTML += "***Não foram encontrados números divisíveis***";
+            } else {
+                p_retorno.innerHTML += `<br><br>
+                <b>ANÁLISE DOS NÚMEROS EXIBIDOS</b>
+                <p>Quantidade de números exibidos: ${divisiveis}</p>
+                <p>Média dos números exibidos: ${(totalExibidos/divisiveis).toFixed(2)}</p>
+                <p>Maior número exibido: ${maiorExibido}</p>
+                <p>Menor número exibido: ${menorExibido}</p>`
+            }
+
+        }
+
+
+    }
+</script>
