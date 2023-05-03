@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 33 Vetor 3</title>
+</head>
+<body>
+    <h1>Pesquisando a correspondencia em todas ocorrência</h1>
+    Informe uma fruta: <input id="ipt_fruta">
+    <button onclick="cadastrar()">Cadastrar</button>
+    <br><br>
+    Qual fruta quer achar? <input placeholder="" id="ipt_pesq">
+    <button onclick="pesquisar()">Pesquisar</button>
+
+    <br>
+    <div id="div_pesquisa"></div>
+
+</body>
+</html>
+<script>
+
+    var frutas = []; 
+    
+    function cadastrar() {
+        frutas.push(ipt_fruta.value);
+        ipt_fruta.value = '';
+    }
+
+    function pesquisar() {
+
+        // Uma das formas para encontrar as ocorrências de um vetor que correspondem a um 
+        // argumento de pesquisa é "varrer" todo o vetor, ou seja, acessar todas ocorrências
+        // do vetor e comparar com o argumento de pesquisa
+        
+        var ax_pesquisa = ipt_pesq.value;
+        var ax_cont = 0;
+        div_pesquisa.innerHTML = '';
+        for (let index = 0; index < frutas.length; index++) {
+            if (frutas[index] == ax_pesquisa) {
+                div_pesquisa.innerHTML += `<br>A fruta ${ax_pesquisa} está na ${index + 1}ª posição`;         
+                ax_cont++;
+            }
+        }
+        if (ax_cont == 0) {
+            div_pesquisa.innerHTML += `<br> A frunta ${ax_pesquisa} não existe no vetor`;
+        } else {
+            div_pesquisa.innerHTML += `<br> A frunta ${ax_pesquisa} foi encontrada ${ax_cont} vezes`;
+        }
+        
+    }
+
+</script>

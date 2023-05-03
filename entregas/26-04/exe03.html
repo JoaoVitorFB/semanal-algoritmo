@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 03</title>
+</head>
+<body>
+    <h1>Exercício 03</h1>
+    <input type="text" id="ipt_bairro">
+    <button onclick="cadastrar()">Cadastrar bairro</button><br><br>
+    <input type="text" id="ipt_pesquisa">
+    <button onclick="pesquisar()">Relembrar moradia</button><br><br>
+    <button onclick="reset()">Reset</button>
+    <p id="p_retorno"></p>
+</body>
+</html>
+<script>
+
+    var bairro = [];
+
+    function cadastrar(){
+
+        bairro.push(ipt_bairro.value);
+        ipt_bairro.value = '';
+    }
+
+    function pesquisar(){
+
+        var pesquisa = Number(ipt_pesquisa.value);
+        ipt_pesquisa.value = '';
+
+        if (pesquisa <= (bairro.length)){
+            p_retorno.innerHTML = `${bairro[pesquisa-1]}`;
+        } else {
+            p_retorno.innerHTML = `Você ainda não morou num ${pesquisa}º bairro!`;
+        }
+    }
+
+    function reset(){
+        bairro = [];
+        p_retorno.innerHTML = ``;
+    }
+
+</script>

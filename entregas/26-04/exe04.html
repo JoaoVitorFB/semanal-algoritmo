@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 04</title>
+</head>
+
+<body>
+    <h1>Exercício 04</h1>
+    <p>Digite os nomes dos filmes que mais gosta:</p>
+    <input type="text" id="ipt_filmes"><br><br>
+    <button onclick="cadastrar()">Cadastrar filmes</button><br><br>
+    <button onclick="pesquisar()">Ver favoritos</button><br><br>
+    <button onclick="reset()">Reset</button><br>
+    <p id="p_retorno"></p>
+</body>
+
+</html>
+<script>
+
+    var filmes = [];
+
+    function cadastrar() {
+
+        filmes.push(ipt_filmes.value);
+        ipt_filmes.value = '';
+    }
+
+    function pesquisar() {
+
+        p_retorno.innerHTML += `${filmes}<br><br>`;
+        p_retorno.innerHTML += `Total: ${filmes.length}<br><br>`;
+        p_retorno.innerHTML += `O que mais gosta é: ${filmes[0]}<br><br>`;
+        p_retorno.innerHTML += `E desses, o que menos gosta é: ${filmes[filmes.length-1]}`;
+
+    }
+
+    function reset() {
+        filmes = [];
+        p_retorno.innerHTML = ``;
+    }
+
+</script>

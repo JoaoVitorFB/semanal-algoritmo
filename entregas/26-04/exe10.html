@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 10</title>
+</head>
+
+<body>
+    <h1>Exercício 10</h1>
+    <p>Digite o nome da linha:</p>
+    <input type="text" id="ipt_linha"><br><br>
+    <button onclick="cadastrar()">Gravar buzão</button><br><br>
+    <input type="text" id="ipt_pesquisa"><br><br>
+    <button onclick="mostrarLinhas()">Mostrar linhas</button><br><br>
+    <button onclick="reset()">Reset</button><br><br>
+    <div id="div_retorno"></div>
+    <div id="div_retorno2"></div>
+</body>
+
+</html>
+<script>
+
+    var linhas = [];
+
+    function cadastrar() {
+
+        linhas.push(ipt_linha.value);
+        ipt_linha.value = '';
+        div_retorno.innerHTML = ``;
+
+        for (var i = linhas.length; i <= linhas.length && i > 0; i--) {
+            
+            div_retorno.innerHTML += `<p>${linhas[i - 1]}<p>`;
+        }
+
+    }
+
+    function mostrarLinhas() {
+        div_retorno2.innerHTML = ``;
+        ipt_pesquisa.innerHTML = '';
+        
+        var pesquisa = ipt_pesquisa.value;
+        var contagem = 0;
+        var ordem = [];
+        
+        for (var i = 0; i < linhas.length; i++) {
+            if (linhas[i] == pesquisa) {   
+                ordem.push(i+1);      
+                contagem++;
+                div_retorno2.innerHTML = `<h2>Linha ${pesquisa}:</h2>`
+                div_retorno2.innerHTML += `Você já pegou essa linha ${contagem} vezes, nessa ordem: ${ordem}`
+            }
+        }
+        
+        
+    }
+
+    function reset() {
+        linhas = [];
+        div_retorno.innerHTML = ``;
+        div_retorno2.innerHTML = ``;
+    }
+
+</script>

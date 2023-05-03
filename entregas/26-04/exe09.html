@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 09</title>
+</head>
+
+<body>
+    <h1>Exercício 09</h1>
+    <p>Digite o nome do projeto:</p>
+    <input type="text" id="ipt_projetos"><br><br>
+    <button onclick="cadastrar()">Cadastrar projeto</button><br><br>
+    <button onclick="mostrarProjetos()">Mostrar projetos</button><br><br>
+    <button onclick="reset()">Reset</button><br><br>
+    <div id="div_retorno"></div>
+    <div id="div_retorno2"></div>
+</body>
+
+</html>
+<script>
+
+    var projetos = [];
+
+    function cadastrar() {
+
+        projetos.push(ipt_projetos.value);
+        ipt_projetos.value = '';
+        div_retorno.innerHTML = ``;
+
+        if (projetos.length >= 0 && projetos.length <= 4) {
+            div_retorno.innerHTML = `Você já fez ${projetos.length} projetos. Por isso você é um profissional júnior.`;
+        } else if (projetos.length >= 5 && projetos.length <= 12) {
+            div_retorno.innerHTML = `Pleno desde o projeto "${projetos[4]}" `;
+        } else if (projetos.length >= 13) {
+            div_retorno.innerHTML = `Senior desde o projeto "${projetos[12]}" `;
+        }
+
+    }
+
+    function mostrarProjetos() {
+        div_retorno2.innerHTML = ``;
+
+        div_retorno2.innerHTML = `<h2>Projetos realizados:</h2>`
+        
+        for (var i = projetos.length; i <= projetos.length && i > 0; i--) {
+            
+            div_retorno2.innerHTML += `<p>${projetos[i - 1]}<p>`;
+        }
+    }
+
+    function reset() {
+        projetos = [];
+        div_retorno.innerHTML = ``;
+        div_retorno2.innerHTML = ``;
+    }
+
+</script>

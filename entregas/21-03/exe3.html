@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Mercado BOM DOCE</h1>
+    Digite a quantidade de chocolates comprados: <input type="text" id="ipt_chocolates"><br><br>
+    <button onclick="calcular()">Compra</button><br>
+    <p id="p_retorno"></p>
+</body>
+</html>
+
+<script>
+
+function calcular() {
+
+    if (ipt_chocolates.value <= 12){
+        p_retorno.innerHTML = `O valor de sua compra foi R$${ipt_chocolates.value*3}`;
+    } else{
+        p_retorno.innerHTML = `O valor de sua compra foi R$${ipt_chocolates.value*2.5}`;
+    }
+}
+
+
+</script>

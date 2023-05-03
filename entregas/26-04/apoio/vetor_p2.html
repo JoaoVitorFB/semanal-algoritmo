@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 33 Vetor 2</title>
+</head>
+<body>
+    
+    Informe uma fruta: <input id="ipt_fruta">
+    <button onclick="cadastrar()">Cadastrar</button>
+    <br><br>
+    <button onclick="mostrar()">Mostrar o Resultado</button>
+
+    <div id="div_pesquisa"></div>
+
+</body>
+</html>
+<script>
+    
+    // Abaixo criamos um VETOR chamado 'frutas', esse vetor está vazio
+    var frutas = []; 
+
+    function cadastrar() {
+        frutas.push(ipt_fruta.value);
+        ipt_fruta.value = '';
+    }
+
+    function mostrar() {
+        
+        div_pesquisa.innerHTML = `O meu vetor está assim : ${frutas} <br>`;            
+        div_pesquisa.innerHTML += `A qtde. de ocorrência é: ${frutas.length}<br>`;            
+        div_pesquisa.innerHTML += `A Primeira ocorrência é: ${frutas[0]}<br>`;            
+        div_pesquisa.innerHTML += `A Última ocorrência é: ${frutas[frutas.length-1]}<br><br><br>`;
+
+
+        
+        
+        //             ********CUIDADO*********
+        // OS COMANDOS ABAIXO PODEM DEIXAR BURACOS NO SEU VETOR
+
+        div_pesquisa.innerHTML += `<br> O meu vetor antes das alterações está assim: <b>${frutas}</b> 
+                    e a quantidade de ocorrências é: ${frutas.length}<br>`;
+
+
+        // Eu posso inserir uma ocorrencia no final com o "[vetor.length]"
+        frutas[frutas.length] = "abacaxi";
+        div_pesquisa.innerHTML += `<br>Com a inclusão do <b>abacaxi</b> no final do vetor, ele ficou assim: 
+                    <b>${frutas}</b> e a quantidade de ocorrências é: ${frutas.length}<br><br>`;
+
+
+        // Eu posso alterar o conteúdo de uma ocorrencia informando o indice desse elemento
+        frutas[1] += " verde"; /* Estou concatenando a palavra verde na segunda fruta */
+        frutas[2] = "tomate" /* Estou alterando o conteúdo da terceira fruta */
+        div_pesquisa.innerHTML += `<br>Com as alterações da segunda e terceria frutas, o vetor ficou assim:  
+                    <b>${frutas}</b> e a quantidade de ocorrências é: ${frutas.length}<br><br>`; 
+        
+
+        // Eu posso inserir uma ocorrencia em uma determinada posição informando o indice,
+        frutas[9] = 'romã';
+        div_pesquisa.innerHTML += `<br>Com a inclusão da <b>romã</b> como a decima fruta, o vetor ficou assim: 
+                    <b>${frutas}</b> e a quantidade de ocorrências é: ${frutas.length}<br><br>`; 
+
+        //Eu posso eliminar o conteúdo de uma ocorrência, repare que a ocorrência permanece com conteúdo vazio       
+        delete frutas[1];       
+        div_pesquisa.innerHTML += `<br>Com a eliminação do conteúdo da segunda fruta, o vetor ficou assim:  
+                    <b>${frutas}</b> e a quantidade de ocorrências é: ${frutas.length}<br><br>`; 
+
+
+
+        // o método ".indexOf()" procura dentro do vetor qual a 1ª ocorrência que atende o 
+        //     Critério de pesquisa
+        div_pesquisa.innerHTML += `A ocorrência que contem Tomate é: ${frutas.indexOf("Tomate")}<br>`;          
+        div_pesquisa.innerHTML += `A ocorrência que contem abacaxi é: ${frutas.indexOf("abacaxi")}<br>`;  
+
+    }
+    //
+    // RECOMENDO FORTEMENTE INSERIR OCORRÊNCIAS COM O MÉTODO .push()
+    //
+</script>

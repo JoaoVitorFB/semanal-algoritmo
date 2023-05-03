@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Ano do Email</h1>
+    Informe o ano: <input type="text" id="ipt_ano"><br><br>
+    <button onclick="calcular()">Ver fato</button><br>
+    <p id="p_retorno"></p>
+</body>
+
+</html>
+
+<script>
+
+    function calcular() {
+
+        if (ipt_ano.value < 1965) {
+            p_retorno.innerHTML = `No ano ${ipt_ano.value} o email nem havia sido criado ainda...`;
+        } else {
+            if (ipt_ano.value == 1965) {
+                p_retorno.innerHTML = `No ano ${ipt_ano.value} o email estava sendo criado...`;
+            } else {
+                if (ipt_ano.value <= 1969) {
+                    p_retorno.innerHTML = `No ano ${ipt_ano.value} o email já havia sido criado...`;
+                } else {
+                    if (ipt_ano.value > 1969) {
+                        p_retorno.innerHTML = `No ano ${ipt_ano.value} o email já havia sido aprimorado -
+Poderia ser enviado para outro computador...`;
+                    }
+                }
+            }
+        }
+    }
+
+
+</script>

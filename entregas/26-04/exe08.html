@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 08</title>
+</head>
+
+<body>
+    <h1>Exercício 08</h1>
+    <p>Digite o nome do aluno:</p>
+    <input type="text" id="ipt_alunos"><br><br>
+    <button onclick="cadastrar()">Cadastrar aluno</button><br><br>
+    <button onclick="reset()">Reset</button><br><br>
+    <div id="div_retorno"></div>
+</body>
+
+</html>
+<script>
+
+    var alunos = [];
+
+    function cadastrar() {
+
+        alunos.push(ipt_alunos.value);
+        ipt_alunos.value = '';
+        div_retorno.innerHTML = ``;
+
+        for (var i = alunos.length; i <= alunos.length && i > 0; i--){
+
+            div_retorno.innerHTML += `<p>${alunos[i-1]}<p>`;
+        }
+
+
+    }
+
+    function reset() {
+        alunos = [];
+        div_retorno.innerHTML = ``;
+    }
+
+</script>
