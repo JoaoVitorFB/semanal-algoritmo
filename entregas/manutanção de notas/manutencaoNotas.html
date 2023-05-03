@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção de Notas</title>
+</head>
+
+<body>
+    <div id="telaInicial">
+        RA: <input type="text" id="ipt_RA">Nota: <input type="text" id="ipt_nota"><br><br>
+        <button onclick="incluir()">Incluir</button><button onclick="excluir()">Excluir</button><br><br>
+        <button onclick="alterar()">Alterar</button><input type="text" id="ipt_notaAlterada"><br><br>
+        <button onclick="eliminarBuraco()">Eliminar buraco / Consultar</button>
+        <button>Ajustar notas</button>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var notas = [0, 1, 2, 3];
+    var RAs = [2000, 2100, 2200, 2300];
+
+    function incluir() {
+
+        var erro = 0;
+
+        if (ipt_nota.value == "") {
+            alert("Preencha o campo de nota!")
+            erro++
+        } else if (ipt_nota.value < 0 || ipt_nota.value > 10) {
+            alert("A nota deve estar entre 0 e 10!")
+            erro++
+        }
+
+        if (ipt_RA.value == "") {
+            alert("Preencha o campo de RA!")
+            erro++
+        } else if (ipt_RA.value < 2000 || ipt_RA.value > 3000) {
+            alert("O RA deve estar entre 2000 e 3000")
+            erro++
+        }
+
+        for (var i = 0; i <= RAs.length; i++) {
+            if (RAs[i] == ipt_RA.value) {
+                alert("O RA já existe!")
+                erro++
+            }
+        }
+
+        if (erro == 0) {
+
+            notas.push(Number(ipt_nota.value));
+            RAs.push(Number(ipt_RA.value));
+            ipt_nota.value = '';
+            ipt_RA.value = '';
+            alert("Dados cadastrados com sucesso!")
+        }
+    }
+
+    function excluir() {
+
+        var pesquisaRA = Number(ipt_RA.value);
+        var pesquisaNota = Number(ipt_nota.value);
+        var alterado = 0;
+        ipt_nota.value = '';
+        ipt_RA.value = '';
+
+        for (var i = 0; i < RAs.length; i++) {
+            if (RAs[i] == pesquisaRA && notas[i] == pesquisaNota) {
+                delete RAs[i]
+                delete notas[i]
+                alterado++
+                alert("Dados excluídos com sucesso!")
+            }
+        }
+
+        if (alterado == 0) {
+            alert("Os dados que deseja excluir não foram registrados!")
+        }
+    }
+
+    function alterar() {
+
+        var erro = 0;
+
+        if (ipt_notaAlterada.value == "") {
+            alert("Preencha o campo de nota!")
+            erro++
+        } else if (ipt_notaAlterada.value < 0 || ipt_notaAlterada.value > 10) {
+            alert("A nota deve estar entre 0 e 10!")
+            erro++
+        }
+
+        var pesquisaRA = Number(ipt_RA.value);
+        var pesquisaNota = Number(ipt_nota.value);
+        var notaAlterada = Number(ipt_notaAlterada.value)
+        var alterado = 0;
+        ipt_nota.value = '';
+        ipt_RA.value = '';
+
+
+        if (erro == 0) {
+            for (var i = 0; i < RAs.length; i++) {
+                if (RAs[i] == pesquisaRA && notas[i] == pesquisaNota) {
+                    notas[i] = notaAlterada;
+                    alterado++
+                    alert("Dados alterados com sucesso!")
+                }
+            }
+
+            if (alterado == 0) {
+                alert("Os dados que deseja alterar não foram registrados!")
+            }
+        }
+    }
+
+    function eliminarBuraco(){
+        var notasTemp = [];
+
+        for (var i = 0; i <= RAs.length; i++) {
+            if (RAs[i] == "") {
+                RAs[i] = "Excluido";
+            
+            }
+        }
+    }
+
+
+</script>
