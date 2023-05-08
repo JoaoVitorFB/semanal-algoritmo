@@ -10,19 +10,60 @@
 
 <body>
     <div id="telaInicial">
+        <h1>Manutenção de notas</h1>
         RA: <input type="text" id="ipt_RA">Nota: <input type="text" id="ipt_nota"><br><br>
         <button onclick="incluir()">Incluir</button><button onclick="excluir()">Excluir</button><br><br>
         <button onclick="alterar()">Alterar</button><input type="text" id="ipt_notaAlterada"><br><br>
         <button onclick="eliminarBuraco()">Eliminar buraco / Consultar</button>
-        <button>Ajustar notas</button>
+        <button onclick="ajustarNotas()">Ajustar notas</button>
+        <div id="div_retorno"></div>
+    </div>
+    <div id="consultaNotas">
+        <h1>Tela de consulta</h1>
+        <button onclick="consultaRA()">Por RA</button> de: <input type="text" id="ipt_minConsultaRA"> até: <input
+            id="ipt_maxConsultaRA"></input><br><br>
+        <button onclick="consultaNota()">Por Nota</button> de: <input type="text" id="ipt_minConsultaNota"> até: <input
+            id="ipt_maxConsultaNota"></input>
+        <div id="retornoConsultaTitulo"></div>
+        <div id="retornoConsulta">
+        </div>
+        <div id="retornoResumo"></div>
+    </div>
+    <div id="ajusteNotas">
+        <h1>Tela de ajuste de notas</h1>
+        <p>RA:</p>
+        de: <input type="text" id="ipt_minAjuste"> até: <input type="text" id="ipt_maxAjuste"><br><br><br>
+        <button onclick="ajusteBonus()">Bônus</button> Pontos: <input type="text" id="ipt_pontosBonus"> OU %: <input
+            type="text" id="ipt_porcBonus">
+        <p>OU</p>
+        <button onclick="ajusteReducao()">Redução</button> Pontos: <input type="text" id="ipt_pontosReducao"> OU %:
+        <input type="text" id="ipt_porcReducao"><br><br>
+        <div id="retornoAjuste"></div>
     </div>
 </body>
 
 </html>
 
+<style>
+    #telaInicial {
+        display: block;
+    }
+
+    #consultaNotas {
+        display: none;
+    }
+
+    #ajusteNotas {
+        display: none;
+    }
+</style>
+
 <script>
-    var notas = [0, 1, 2, 3];
-    var RAs = [2000, 2100, 2200, 2300];
+    var notas = [10, 9, 8, 7, 6];
+    var RAs = [2000, 2100, 2200, 2300, 2400];
+    var clickExcluir = false;
+
+
 
     function incluir() {
 
@@ -59,6 +100,13 @@
             ipt_RA.value = '';
             alert("Dados cadastrados com sucesso!")
         }
+
+        div_retorno.innerHTML = "<h2>Cadastramentos Efetuados</h2>"
+
+        for (var i = RAs.length; i <= RAs.length && i > 0; i--) {
+
+            div_retorno.innerHTML += `<p>${[i]}° - RA: ${RAs[i - 1]} - Nota: ${notas[i - 1]}<p>`;
+        }
     }
 
     function excluir() {
@@ -68,6 +116,7 @@
         var alterado = 0;
         ipt_nota.value = '';
         ipt_RA.value = '';
+        clickExcluir = true;
 
         for (var i = 0; i < RAs.length; i++) {
             if (RAs[i] == pesquisaRA && notas[i] == pesquisaNota) {
@@ -81,6 +130,14 @@
         if (alterado == 0) {
             alert("Os dados que deseja excluir não foram registrados!")
         }
+
+        div_retorno.innerHTML = "<h2>Cadastramentos Efetuados</h2>"
+
+        for (var i = RAs.length; i <= RAs.length && i > 0; i--) {
+
+            div_retorno.innerHTML += `<p>${[i]}° - RA: ${RAs[i - 1]} - Nota: ${notas[i - 1]}<p>`;
+        }
+
     }
 
     function alterar() {
@@ -100,6 +157,7 @@
         var notaAlterada = Number(ipt_notaAlterada.value)
         var alterado = 0;
         ipt_nota.value = '';
+        ipt_notaAlterada.value = '';
         ipt_RA.value = '';
 
 
@@ -116,18 +174,325 @@
                 alert("Os dados que deseja alterar não foram registrados!")
             }
         }
+
+        div_retorno.innerHTML = "<h2>Cadastramentos Efetuados</h2>"
+
+        for (var i = RAs.length; i <= RAs.length && i > 0; i--) {
+
+            div_retorno.innerHTML += `<p>${[i]}° - RA: ${RAs[i - 1]} - Nota: ${notas[i - 1]}<p>`;
+        }
+
     }
 
-    function eliminarBuraco(){
+    function eliminarBuraco() {
         var notasTemp = [];
 
-        for (var i = 0; i <= RAs.length; i++) {
-            if (RAs[i] == "") {
-                RAs[i] = "Excluido";
+        if (clickExcluir == true){
             
+            for (var i = 0; i <= RAs.length; i++) {
+                if (RAs[i] != undefined) {
+                    notasTemp.push(Number(RAs[i]));
+    
+                }
+            }
+            RAs = [notasTemp];
+        }
+
+
+        telaInicial.style.display = 'none';
+        consultaNotas.style.display = 'block';
+    }
+
+    function consultaRA() {
+        var minConsultaRA = Number(ipt_minConsultaRA.value);
+        var maxConsultaRA = Number(ipt_maxConsultaRA.value);
+        var erro = false;
+        var consultaRATemp = [];
+        var consultaNotaTemp = [];
+        var posicaoCadastro = [];
+        var maiorNotaTemp = 0;
+        var maiorNota = 0;
+        var menorNotaTemp = 0;
+        var menorNota = 0;
+        var somaNotasTemp = 0;
+        var somaNotas = 0;
+        var qtdNotasTemp = 0;
+
+        retornoConsulta.innerHTML = "";
+        ipt_minConsultaRA.value = "";
+        ipt_maxConsultaRA.value = "";
+
+        if (maxConsultaRA == "" || minConsultaRA == "") {
+            alert("Preencha os campos!")
+            erro = true;
+        } else if (maxConsultaRA < minConsultaRA) {
+            alert("O RA limite da consulta deve ser maior ou igual ao RA de início!")
+            erro = true;
+        } else if (minConsultaRA < 2000 || maxConsultaRA > 3000) {
+            alert("Os RA's devem estar entre 2000 e 3000")
+            erro = true;
+        }
+
+        if (erro == false) {
+            for (var i = 0; i < RAs.length; i++) {
+                if (RAs[i] >= minConsultaRA && RAs[i] <= maxConsultaRA) {
+                    if (notas[i] <= menorNotaTemp || menorNotaTemp == 0) {
+                        menorNotaTemp = notas[i];
+                    }
+
+                    if (notas[i] >= maiorNotaTemp || maiorNotaTemp == 0) {
+                        maiorNotaTemp = notas[i];
+                    }
+
+                    somaNotasTemp = somaNotasTemp + notas[i];
+                    qtdNotasTemp++
+                    consultaRATemp.push(Number(RAs[i]));
+                    consultaNotaTemp.push(Number(notas[i]));
+                    posicaoCadastro.push(Number(i + 1));
+                }
+            }
+
+            for (var i = 1; i <= consultaRATemp.length; i++) {
+                retornoConsultaTitulo.innerHTML = `<h2> Cadastros Selecionados </h2>`;
+                retornoConsulta.innerHTML += `<p>${posicaoCadastro[i - 1]}° - RA: ${consultaRATemp[i - 1]} - Nota: ${consultaNotaTemp[i - 1]}<p>`;
+            }
+
+            for (var i = 0; i < notas.length; i++) {
+                if (notas[i] <= menorNota || menorNota == 0) {
+                    menorNota = notas[i];
+                }
+
+                if (notas[i] >= maiorNota || maiorNota == 0) {
+                    maiorNota = notas[i];
+                }
+
+                somaNotas = somaNotas + notas[i];
+            }
+
+            retornoResumo.innerHTML = `<h3><u>Resumo Final</u></h3>`
+            retornoResumo.innerHTML += `
+            <p>Maior nota do vetor:${maiorNota}</p>
+            <p>Menor nota do vetor:${menorNota}</p><br>
+            <p>Maior nota do intervalo: ${maiorNotaTemp}</p>
+            <p>Menor nota do intervalo:${menorNotaTemp}</p><br>
+            <p>Média das notas do vetor: ${somaNotas / notas.length}</p>
+            <p>Média das notas do intervalo: ${somaNotasTemp / qtdNotasTemp}</p>`;
+        }
+    }
+
+    function consultaNota() {
+        var minConsultaNota = Number(ipt_minConsultaNota.value);
+        var maxConsultaNota = Number(ipt_maxConsultaNota.value);
+        var erro = false;
+        var consultaRATemp = [];
+        var consultaNotaTemp = [];
+        var posicaoCadastro = [];
+        var maiorNotaTemp = 0;
+        var maiorNota = 0;
+        var menorNotaTemp = 0;
+        var menorNota = 0;
+        var somaNotasTemp = 0;
+        var somaNotas = 0;
+        var qtdNotasTemp = 0;
+
+        
+        if (ipt_maxConsultaNota.value == "" || ipt_minConsultaNota.value == "") {
+            alert("Preencha os campos!")
+            erro = true;
+        } else if (Number(ipt_maxConsultaNota.value) < Number(ipt_minConsultaNota.value)) {
+            alert("A nota limite da consulta deve ser maior ou igual a nota de início!")
+            erro = true;
+        } else if (ipt_minConsultaNota.value < 0 || ipt_maxConsultaNota.value > 10) {
+            alert("As notas devem estar entre 0 e 10")
+            erro = true;
+        }
+
+        retornoConsulta.innerHTML = "";
+        ipt_minConsultaNota.value = "";
+        ipt_maxConsultaNota.value = "";
+
+        if (erro == false) {
+            for (var i = 0; i < notas.length; i++) {
+                if (notas[i] >= minConsultaNota && notas[i] <= maxConsultaNota) {
+                    if (notas[i] <= menorNotaTemp || menorNotaTemp == 0) {
+                        menorNotaTemp = notas[i];
+                    }
+
+                    if (notas[i] >= maiorNotaTemp || maiorNotaTemp == 0) {
+                        maiorNotaTemp = notas[i];
+                    }
+
+                    somaNotasTemp = somaNotasTemp + notas[i];
+                    qtdNotasTemp++
+
+                    consultaRATemp.push(Number(RAs[i]));
+                    consultaNotaTemp.push(Number(notas[i]));
+                    posicaoCadastro.push(Number(i + 1));
+                }
+            }
+
+            for (var i = 1; i <= consultaRATemp.length; i++) {
+                retornoConsultaTitulo.innerHTML = `<h2> Cadastros Selecionados </h2>`;
+                retornoConsulta.innerHTML += `<p>${posicaoCadastro[i - 1]}° - RA: ${consultaRATemp[i - 1]} - Nota: ${consultaNotaTemp[i - 1]}<p>`;
+            }
+
+            for (var i = 0; i < notas.length; i++) {
+                if (notas[i] <= menorNota || menorNota == 0) {
+                    menorNota = notas[i];
+                }
+
+                if (notas[i] >= maiorNota || maiorNota == 0) {
+                    maiorNota = notas[i];
+                }
+
+                somaNotas = somaNotas + notas[i];
+            }
+
+            retornoResumo.innerHTML = `<h3><u>Resumo Final</u></h3>`
+            retornoResumo.innerHTML += `
+            <p>Maior nota do vetor:${maiorNota}</p>
+            <p>Menor nota do vetor:${menorNota}</p><br>
+            <p>Maior nota do intervalo: ${maiorNotaTemp}</p>
+            <p>Menor nota do intervalo:${menorNotaTemp}</p><br>
+            <p>Média das notas do vetor: ${somaNotas / notas.length}</p>
+            <p>Média das notas do intervalo: ${somaNotasTemp / qtdNotasTemp}</p>`;
+        }
+
+
+    }
+
+    function ajustarNotas(){
+        telaInicial.style.display = 'none';
+        ajusteNotas.style.display = 'block';
+
+    }
+
+    function ajusteBonus() {
+
+        var minAjuste = Number(ipt_minAjuste.value);
+        var maxAjuste = Number(ipt_maxAjuste.value);
+        var pontosBonus = Number(ipt_pontosBonus.value);
+        var pontosReducao = Number(ipt_pontosReducao.value);
+        var porcBonus = Number((ipt_porcBonus.value / 100) + 1);
+        var porcReducao = Number((ipt_porcReducao.value / 100) + 1);
+        var erro = false;
+
+
+        if (maxAjuste == "" || minAjuste == "") {
+            alert("Indique o intervalo de RA!")
+            erro = true;
+        } else if (maxAjuste < minAjuste) {
+            alert("O RA limite do ajuste deve ser maior ou igual ao RA de início!")
+            erro = true;
+        } else if (minAjuste < 2000 || maxAjuste > 3000) {
+            alert("Os RA's devem estar entre 2000 e 3000")
+            erro = true;
+        }
+
+        if (ipt_pontosBonus.value == 0 && ipt_porcBonus.value == 0) {
+            alert("Indique o bonus!")
+            erro = true;
+        } else if (ipt_pontosBonus.value != "" && ipt_porcBonus.value != "") {
+            alert("Somente um dos campos podem ser preenchidos!")
+            erro = true;
+        } else if (ipt_porcBonus.value <= 0 && ipt_pontosBonus.value == "") {
+            alert("A porcentagem deve ser maior que zero!")
+            erro = true;
+        } else if (ipt_pontosBonus.value <= 0 && ipt_porcBonus.value == "") {
+            alert("Os pontos devem ser maiores que zero!")
+            erro = true;
+        }
+
+        ipt_minAjuste.value = "";
+        ipt_maxAjuste.value = "";
+        ipt_pontosBonus.value = "";
+        ipt_pontosReducao.value = "";
+        ipt_porcBonus.value = "";
+        ipt_porcReducao.value = "";
+
+        if (erro == false) {
+
+            for (var i = 0; i < RAs.length; i++) {
+                if (RAs[i] >= minAjuste && RAs[i] <= maxAjuste) {
+
+                    if (pontosBonus != 0) {
+                        notas[i] = notas[i] + pontosBonus
+                    } else {
+                        notas[i] = notas[i] * porcBonus
+                    }
+                }
+            }
+
+            retornoAjuste.innerHTML = "<h2>Lista do cadastro</h2>"
+
+            for (var i = RAs.length; i <= RAs.length && i > 0; i--) {
+
+                retornoAjuste.innerHTML += `<p>${[i]}° - RA: ${RAs[i - 1]} - Nota: ${notas[i - 1]}<p>`;
             }
         }
     }
 
+    function ajusteReducao() {
+
+        var minAjuste = Number(ipt_minAjuste.value);
+        var maxAjuste = Number(ipt_maxAjuste.value);
+        var pontosReducao = Number(ipt_pontosReducao.value);
+        var porcReducao = Number(ipt_porcReducao.value / 100);
+        var erro = false;
+
+
+        if (maxAjuste == "" || minAjuste == "") {
+            alert("Indique o intervalo de RA!")
+            erro = true;
+        } else if (maxAjuste < minAjuste) {
+            alert("O RA limite do ajuste deve ser maior ou igual ao RA de início!")
+            erro = true;
+        } else if (minAjuste < 2000 || maxAjuste > 3000) {
+            alert("Os RA's devem estar entre 2000 e 3000")
+            erro = true;
+        }
+
+        if (ipt_pontosReducao.value == 0 && ipt_porcReducao.value == 0) {
+            alert("Indique a redução!")
+            erro = true;
+        } else if (ipt_pontosReducao.value != "" && ipt_porcReducao.value != "") {
+            alert("Somente um dos campos podem ser preenchidos!")
+            erro = true;
+        } else if (ipt_porcReducao.value <= 0 && ipt_pontosReducao.value == "") {
+            alert("A porcentagem deve ser maior que zero!")
+            erro = true;
+        } else if (ipt_pontosReducao.value <= 0 && ipt_porcReducao.value == "") {
+            alert("Os pontos devem ser maiores que zero!")
+            erro = true;
+        }
+
+        ipt_minAjuste.value = "";
+        ipt_maxAjuste.value = "";
+        ipt_pontosReducao.value = "";
+        ipt_pontosReducao.value = "";
+        ipt_porcReducao.value = "";
+        ipt_porcReducao.value = "";
+
+        if (erro == false) {
+
+            for (var i = 0; i < RAs.length; i++) {
+                if (RAs[i] >= minAjuste && RAs[i] <= maxAjuste) {
+
+                    if (pontosReducao != 0) {
+                        notas[i] = notas[i] - pontosReducao
+                    } else {
+                        notas[i] = notas[i] - (notas[i] * porcReducao)
+                    }
+                }
+            }
+
+            retornoAjuste.innerHTML = "<h2>Lista do cadastro</h2>"
+
+            for (var i = RAs.length; i <= RAs.length && i > 0; i--) {
+
+                retornoAjuste.innerHTML += `<p>${[i]}° - RA: ${RAs[i - 1]} - Nota: ${notas[i - 1].toFixed(2)}<p>`;
+            }
+        }
+    }
 
 </script>
