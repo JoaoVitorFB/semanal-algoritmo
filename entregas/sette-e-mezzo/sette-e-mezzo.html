@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+    var numSortNaipe = Number((Math.random()*3)).toFixed()
+    var numSortCarta = Number((Math.random()*9+1)).toFixed()
+    var valoresCartas = [1, 2 , 3, 4, 5, 6, 7, 0.5, 0.5, 0.5];
+    var ax_carta = ["Ás", 1, 2, 3, 4, 5, 6, 7, "Valete", "Dama", "Rei"]
+    var ax_naipe = ["Ouros", "Espadas", "Copas", "Paus"]
+    var valorCarta = valoresCartas[numSortCarta-1];
+
+    // const baralho = {
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1],
+    //     ['Ás', naipe, 1]
+    // }
+
+    const baralho = {
+        carta: ax_carta[numSortCarta],
+        naipe: ax_naipe[numSortNaipe],
+        valor: valorCarta
+    }
+
+    console.log(`(valor: ${baralho.valor})${baralho.carta} de ${baralho.naipe}`)
+</script>
