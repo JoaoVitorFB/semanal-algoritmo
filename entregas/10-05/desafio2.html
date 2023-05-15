@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Digite seu número da sorte: <input id="ipt_numSorte" type="text" placeholder="entre 0 100"><br><br>
+    <button onclick="sortear()">Sortear</button><br><br>
+    <p id="p_retorno"></p>
+</body>
+
+</html>
+<script>
+    function sortear() {
+        var erro = false;
+        var numSorte = Number(ipt_numSorte.value);
+        var sorteio = ((Math.random()) * 100).toFixed(0);
+
+        if (numSorte < 0 || numSorte > 100 || ipt_numSorte.value == "") {
+            erro = true;
+            ipt_numSorte.value = "";
+            p_retorno.innerHTML = ``;
+            alert("O número da sorte deve estar entre 0 e 100")
+        } else {
+            ipt_numSorte.value = "";
+            p_retorno.innerHTML = ``;
+
+            if (numSorte != sorteio) {
+                for (var i = 0; numSorte != sorteio; i++) {
+                    sorteio = ((Math.random()) * 100).toFixed(0);
+                }
+                alert(`Foram necessários ${i} sorteios`);
+            } else {
+                alert(`Foi necessário 1 sorteio`);
+            }
+        }
+
+
+
+    }
+</script>

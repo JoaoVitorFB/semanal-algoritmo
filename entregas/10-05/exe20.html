@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Quantos números deseja sortear? <input type="text" id="ipt_qtdNum"><br><br>
+    <button onclick="sortear()">Sortear</button><br><br>
+    <div id="retorno"></div>
+</body>
+
+</html>
+<script>
+    function sortear() {
+        retorno.innerHTML = "";
+        var numSorteados = [];
+        var qtdNum = Number(ipt_qtdNum.value);
+        var maxSorteado = 0;
+        var minSorteado = 100;
+        var total = 0;
+        var media = 0;
+
+        for (var i = 0; i < qtdNum; i++) {
+            var sorteio = Number((Math.random()) * 100).toFixed(0);
+            numSorteados.push(Number(sorteio));
+        }
+
+        for (var i = numSorteados.length; i <= numSorteados.length && i > 0; i--) {
+
+            total = total + numSorteados[i - 1]
+            media = total / qtdNum;
+
+                retorno.innerHTML += `${numSorteados[i - 1]}<br>`;
+
+            if (numSorteados[i - 1] >= maxSorteado) {
+                maxSorteado = numSorteados[i - 1]
+            }
+            if (numSorteados[i - 1] <= minSorteado) {
+                minSorteado = numSorteados[i - 1]
+            }
+        }
+
+        retorno.innerHTML += `<p>O maior número sorteado foi:${maxSorteado}</p>
+        <p>O menor número sorteado foi:${minSorteado}</p>
+        <p>A média de todos os números sorteados é: ${media.toFixed(2)}</p>`;
+    }
+</script>

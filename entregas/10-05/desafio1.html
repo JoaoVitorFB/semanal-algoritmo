@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    img {
+        height: 150px;
+    }
+</style>
+
+<body>
+    <button onclick="jogar()">Jogar</button>
+    <div id="imagens"></div>
+    <div id="div_retorno"></div>
+</body>
+
+</html>
+<script>
+
+    function jogar() {
+        var jogador1 = ((Math.random()) * 2 + 1).toFixed(0);
+        var jogador2 = ((Math.random()) * 2 + 1).toFixed(0);
+        var pedra = `<img src="https://www.bigmae.com/wp-content/uploads/2010/07/pedra.png">`;
+        var papel = `<img src="https://www.bigmae.com/wp-content/uploads/2010/07/papel.png">`;
+        var tesoura = `<img src="https://www.bigmae.com/wp-content/uploads/2010/07/tesoura.png">`;
+
+        // 1 = pedra   2 = papel    3 = tesoura
+
+        if (jogador1 == 1 && jogador2 == 2) {
+
+            imagens.innerHTML = `${pedra} ${papel}`;
+            div_retorno.innerHTML = `<p>O jogador 2 ganhou porque o papel cobre a pedra</p>`;
+
+        } else if (jogador1 == 1 && jogador2 == 3) {
+
+            imagens.innerHTML = `${pedra} ${tesoura}`;
+            div_retorno.innerHTML = `<p>O jogador 1 ganhou a pedra quebra a tesoura</p>`;
+
+        } else if (jogador1 == 2 && jogador2 == 1) {
+
+            imagens.innerHTML = `${papel} ${pedra}`;
+            div_retorno.innerHTML = `<p>O jogador 1 ganhou porque o papel cobre a pedra</p>`;
+
+        } else if (jogador1 == 2 && jogador2 == 3) {
+
+            imagens.innerHTML = `${papel} ${tesoura}`;
+            div_retorno.innerHTML = `<p>O jogador 2 ganhou porque a tesoura corta o papel</p>`;
+
+        } else if (jogador1 == 3 && jogador2 == 1) {
+
+            imagens.innerHTML = `${tesoura} ${pedra}`;
+            div_retorno.innerHTML = `<p>O jogador 2 ganhou a pedra quebra a tesoura</p>`;
+
+        } else if (jogador1 == 3 && jogador2 == 2) {
+
+            imagens.innerHTML = `${tesoura} ${papel}`;
+            div_retorno.innerHTML = `<p>O jogador 1 ganhou porque a tesoura corta o papel</p>`;
+
+        } else if (jogador1 == 1 && jogador2 == 1) {
+
+            imagens.innerHTML = `${pedra} ${pedra}`;
+            div_retorno.innerHTML = `<p>O jogo deu empate</p>`
+
+        } else if (jogador1 == 2 && jogador2 == 2) {
+
+            imagens.innerHTML = `${papel} ${papel}`;
+            div_retorno.innerHTML = `<p>O jogo deu empate</p>`
+
+        } else if (jogador1 == 3 && jogador2 == 3) {
+
+            imagens.innerHTML = `${tesoura} ${tesoura}`;
+            div_retorno.innerHTML = `<p>O jogo deu empate</p>`
+
+        }
+
+
+
+    }
+
+</script>

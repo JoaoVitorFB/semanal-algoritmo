@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 39d Número Aleatório</title>
+</head>
+
+<body>
+    <h2>Analise os resultados abaixo e diga o que está acontecendo</h2>
+    <button onclick="sortear()">Sortear</button>
+    <br><br>
+    <div id="div_result">Resultdo <br></div>
+</body>
+
+</html>
+<script>
+
+    // neste caso estamos multiplicando por 3 para obtermos sorteios entre 0 e 3
+    // E ALEM DISSO SOMAMOS 1 PARA DESLOCAR OS SORTEIROS PARA O RANGE ENTRE 1 E 4
+
+
+    function sortear() {
+        var ax_num = Math.random();
+        div_result.innerHTML += `Número sorteado = ${(ax_num)} Número transformado ${ax_num*3+1} O número arredondado  ${(ax_num*3+1).toFixed()} <br> `;    }
+</script>

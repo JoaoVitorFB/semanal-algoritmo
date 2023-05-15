@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="sorteioNota()">Gerar uma nota entre 0 e 10</button><br>
+    <p id="p_retorno"></p><br><br>
+    <button onclick="sorteioFrequencia()">Gerar uma frequência de aluno entre 0 e 50</button><br>
+    <p id="p_retorno2"></p><br><br>
+    <button onclick="aprovacao()">Aprovado?</button><br>
+    <div id="div_retorno3"></div>
+</body>
+
+</html>
+<script>
+
+    var frequencia = 0;
+    var nota = 0;
+
+    function sorteioNota() {
+        nota = 0;
+        nota = ((Math.random())*7)+3;
+        p_retorno.innerHTML = `Nota: ${nota.toFixed(1)}`;
+    }
+
+    function sorteioFrequencia() {
+        frequencia = 0;
+        frequencia = ((Math.random())*50)+50;
+        p_retorno2.innerHTML = `Frequência: ${frequencia.toFixed(1)}`;
+    }
+
+    function aprovacao() {
+        if (frequencia >= 75 && nota >= 6){
+            div_retorno3.innerHTML = `<p style="color: green;">Aprovado!<p>`;
+        } else {
+            div_retorno3.innerHTML = `<p style="color: red;">Reprovado!<p>`;
+        }
+    }
+
+</script>

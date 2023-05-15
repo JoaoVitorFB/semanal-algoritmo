@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 39g Número Aleatório</title>
+</head>
+
+<body>
+    <h2>Analise os resultados abaixo e diga o que está acontecendo</h2>
+    Entre com o início do intervalo <input id="ipt_inic">
+    Entre com o fim do intervalo <input id="ipt_fim">
+    <button onclick="sortear()">Sortear</button>
+    <br><br>
+    <div id="div_result">Resultdo <br></div>
+</body>
+
+</html>
+<script>
+    // Concluindo:
+    //   a) Quando eu multiplico o retorno do Math.random() é para aumentar 
+    //      o range do sorteio
+    //   b) Quando eu somo o resultado acima é para deslocar o range
+    //   c) Tratamento de números inteiros:
+    //      c.1) Para encontrar o multiplicador, subtraia o fim do inicio 
+    //           do range, por exemplo, para o range de 20 a 30, 
+    //           o multiplicador = 30-20, ou seja, o multiplicador é 10
+    //      c.2) Use o valor do inicio do range como a parcela de soma      
+    // 
+    // Então, sendo "i" o inicio do range desejado e "f" o final do range
+    // desejado, a operação sera:
+    // (Math.random()*(f-i)+i).toFixed()
+    function sortear() {
+        var ax_num = Math.random();
+        var ax_ini = Number(ipt_inic.value);
+        var ax_fim = Number(ipt_fim.value);
+        div_result.innerHTML += `Número sorteado = ${(ax_num)} Número transformado ${ax_num*(ax_fim-ax_ini)+ax_ini} O número arredondado  ${(ax_num*(ax_fim-ax_ini)+ax_ini).toFixed()} <br> `;
+    }
+</script>
