@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Prova Five Turtles</h2>
+    <p>Digite a distância da prova:</p>
+    <input type="text" id="ipt_distancia"><br>
+    <p>Corredor 1:</p><input type="text" id="ipt_corredor1">
+    <p>Corredor 2:</p><input type="text" id="ipt_corredor2">
+    <p>Corredor 3:</p><input type="text" id="ipt_corredor3">
+    <p>Corredor 4:</p><input type="text" id="ipt_corredor4">
+    <p>Corredor 5:</p><input type="text" id="ipt_corredor5"><br><br>
+    <button onclick="largada()">Dar a largada</button><br><br>
+    <div id="retorno"></div>
+</body>
+
+</html>
+<script>
+    var nomeCorredores = [];
+    var voltas = {
+        corredor1: [],
+        corredor2: [],
+        corredor3: [],
+        corredor4: [],
+        corredor5: []
+    }
+    var acumulado = {
+        corredor1: [],
+        corredor2: [],
+        corredor3: [],
+        corredor4: [],
+        corredor5: []
+    }
+    var acumuladoCorredor1 = 0;
+    var acumuladoCorredor2 = 0;
+    var acumuladoCorredor3 = 0;
+    var acumuladoCorredor4 = 0;
+    var acumuladoCorredor5 = 0;
+    var distancia = 0;
+    var menorTempoAtual = 0;
+    var nomeMenorTempoAtual = "";
+    var ultimaVolta = [];
+
+
+    function largada() {
+        distancia = Number(ipt_distancia.value);
+        nomeCorredores = [ipt_corredor1.value, ipt_corredor2.value, ipt_corredor3.value, ipt_corredor4.value, ipt_corredor5.value];
+
+        ipt_corredor1.value = ""; 
+        ipt_corredor2.value = "";
+        ipt_corredor3.value = ""; 
+        ipt_corredor4.value = "";
+        ipt_corredor5.value = "";
+        ipt_distancia.value = "";
+        retorno.innerHTML = "";
+
+        if (distancia < 5 || distancia > 42) {
+            alert("A distancia deve estar entre 5km e 42km")
+        } else {
+            volta()
+        }
+    }
+
+    function volta() {
+
+        for (i = 1; i <= distancia; i++) {
+            tempo()
+            acumuladoCorredor1 = acumuladoCorredor1 + voltaCorredor1
+            acumuladoCorredor2 = acumuladoCorredor2 + voltaCorredor2
+            acumuladoCorredor3 = acumuladoCorredor3 + voltaCorredor3
+            acumuladoCorredor4 = acumuladoCorredor4 + voltaCorredor4
+            acumuladoCorredor5 = acumuladoCorredor5 + voltaCorredor5
+
+
+            acumulado.corredor1.push(Number(acumuladoCorredor1))
+            acumulado.corredor2.push(Number(acumuladoCorredor2))
+            acumulado.corredor3.push(Number(acumuladoCorredor3))
+            acumulado.corredor4.push(Number(acumuladoCorredor4))
+            acumulado.corredor5.push(Number(acumuladoCorredor5))
+
+            voltas.corredor1.push(Number(voltaCorredor1))
+            voltas.corredor2.push(Number(voltaCorredor2))
+            voltas.corredor3.push(Number(voltaCorredor3))
+            voltas.corredor4.push(Number(voltaCorredor4))
+            voltas.corredor5.push(Number(voltaCorredor5))
+
+            menorTempoAtual = 1000;
+            var voltaAtual = [acumuladoCorredor1, acumuladoCorredor2, acumuladoCorredor3, acumuladoCorredor4, acumuladoCorredor5];
+            nomeMenorTempoAtual = "";
+
+            for (x = 0; x < 5; x++) {
+                if (voltaAtual[x] <= menorTempoAtual) {
+                    menorTempoAtual = voltaAtual[x]
+                    nomeMenorTempoAtual = nomeCorredores[x]
+                }
+            }
+
+            if (i == distancia) {
+                break
+            }
+
+            alert(`Volta: ${i} | O corredor ${nomeMenorTempoAtual} está na frente com ${menorTempoAtual.toFixed(1)} minutos.`)
+        }
+
+        ultimaVolta.push(Number(acumuladoCorredor1))
+        ultimaVolta.push(Number(acumuladoCorredor2))
+        ultimaVolta.push(Number(acumuladoCorredor3))
+        ultimaVolta.push(Number(acumuladoCorredor4))
+        ultimaVolta.push(Number(acumuladoCorredor5))
+
+        fimCorrida()
+
+    }
+
+    function tempo() {
+        voltaCorredor1 = Number((Math.random() * 2 + 4).toFixed(1));
+        voltaCorredor2 = Number((Math.random() * 2 + 4).toFixed(1));
+        voltaCorredor3 = Number((Math.random() * 2 + 4).toFixed(1));
+        voltaCorredor4 = Number((Math.random() * 2 + 4).toFixed(1));
+        voltaCorredor5 = Number((Math.random() * 2 + 4).toFixed(1));
+    }
+
+    function fimCorrida() {
+        var tempoPrimeiroLugar = menorTempoAtual;
+        var tempoSegundoLugar = 100;
+        var tempoTerceiroLugar = 100;
+        var primeiroLugar = "";
+        var segundoLugar = "";
+        var terceiroLugar = "";
+
+
+        for (i = 0; i < 5; i++) {
+            if (ultimaVolta[i] > tempoPrimeiroLugar && ultimaVolta[i] < tempoSegundoLugar) {
+                tempoSegundoLugar = ultimaVolta[i]
+            }
+        }
+
+        for (i = 0; i < 5; i++) {
+            if (ultimaVolta[i] > tempoSegundoLugar && ultimaVolta[i] < tempoTerceiroLugar) {
+                tempoTerceiroLugar = ultimaVolta[i]
+            }
+        }
+
+        primeiroLugar = nomeCorredores[ultimaVolta.indexOf(tempoPrimeiroLugar)];
+        segundoLugar = nomeCorredores[ultimaVolta.indexOf(tempoSegundoLugar)];
+        terceiroLugar = nomeCorredores[ultimaVolta.indexOf(tempoTerceiroLugar)];
+        
+
+        retorno.innerHTML += `<h2>Pódio</h2>
+        <p>1°Lugar: ${primeiroLugar}</p>
+        <p>2°Lugar: ${segundoLugar}</p>
+        <p>3°Lugar: ${terceiroLugar}</p>`
+
+        for (voltaX = distancia; voltaX > 0; voltaX--) {
+            retorno.innerHTML += `<h3>Volta: ${voltaX}</h3>
+            <p>Corredor: ${nomeCorredores[0]} - Tempo da volta: ${(voltas.corredor1[voltaX - 1]).toFixed(1)} - Tempo acumulado: ${(acumulado.corredor1[voltaX - 1]).toFixed(1)}</p>
+            <p>Corredor: ${nomeCorredores[1]} - Tempo da volta: ${(voltas.corredor2[voltaX - 1]).toFixed(1)} - Tempo acumulado: ${(acumulado.corredor2[voltaX - 1]).toFixed(1)}</p>
+            <p>Corredor: ${nomeCorredores[2]} - Tempo da volta: ${(voltas.corredor3[voltaX - 1]).toFixed(1)} - Tempo acumulado: ${(acumulado.corredor3[voltaX - 1]).toFixed(1)}</p>
+            <p>Corredor: ${nomeCorredores[3]} - Tempo da volta: ${(voltas.corredor4[voltaX - 1]).toFixed(1)} - Tempo acumulado: ${(acumulado.corredor4[voltaX - 1]).toFixed(1)}</p>
+            <p>Corredor: ${nomeCorredores[4]} - Tempo da volta: ${(voltas.corredor5[voltaX - 1]).toFixed(1)} - Tempo acumulado: ${(acumulado.corredor5[voltaX - 1]).toFixed(1)}</p>`
+        }
+    }
+</script>
