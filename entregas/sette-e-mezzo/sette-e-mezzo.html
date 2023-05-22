@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="jogar()">Jogar</button>
+    <button onclick="passarVez()">Passar vez</button>
+    <div id="retorno">
+        <div id="jogador">
+            <h3 id="h3_tituloJogador"></h3>
+        </div>
+        <div id="banca">
+            <h3 id="h3_tituloBanca"></h3>
+        </div>
+        <h4 id="final"></h4>
+    </div>
+</body>
+
+</html>
+<script>
+
+    var cartasUsadas = [];
+    var valoresCartas = [1, 2, 3, 4, 5, 6, 7, 0.5, 0.5, 0.5];
+    var ax_carta = ["Ás", 1, 2, 3, 4, 5, 6, 7, "Valete", "Dama", "Rei"];
+    var ax_naipe = ["Ouros", "Espadas", "Copas", "Paus"];
+    var valorCarta = 0;
+    var numSortNaipe = 0;
+    var numSortCarta = 0;
+    var sorteado = false;
+    var bancaJogando = false;
+    var pontosJogador = 0;
+    var pontosBanca = 0;
+    var resultado = 0;
+
+
+    function passarVez() {
+        bancaJogando = true;
+        jogar();
+    }
+
+    function sortear() {
+        numSortNaipe = Number((Math.random() * 3)).toFixed();
+        numSortCarta = Number((Math.random() * 9 + 1)).toFixed();
+        valorCarta = valoresCartas[numSortCarta - 1];
+    }
+
+    function jogar() {
+        sorteado = false;
+        sortear();
+
+
+        const baralho = {
+            carta: ax_carta[numSortCarta],
+            naipe: ax_naipe[numSortNaipe],
+            valor: valorCarta
+        }
+
+        if (cartasUsadas.indexOf(`${baralho.carta}.${baralho.naipe}`) != -1) {
+            jogar();
+            sorteado = true;
+        }
+
+        if (sorteado == false) {
+
+            console.log(`(valor: ${baralho.valor})${baralho.carta} de ${baralho.naipe}`)
+            cartasUsadas.push(`${baralho.carta}.${baralho.naipe}`);
+            console.log(cartasUsadas);
+
+            if (bancaJogando == false) {
+                h3_tituloJogador.innerHTML = "Jogador:"
+                jogador.innerHTML += `<p>(valor: ${baralho.valor}) ${baralho.carta} de ${baralho.naipe}</p>`;
+                pontosJogador = pontosJogador + baralho.valor
+
+                if (pontosJogador > 7.5) {
+                    resultado = 1;
+                    mensagemFinal();
+                } else if (pontosJogador == 7.5) {
+                    resultado = 4;
+                    mensagemFinal();
+                }
+
+                console.log(`Pontos jogador: ${pontosJogador}`);
+                console.log(`Pontos banca: ${pontosBanca}`);
+            } else {
+                h3_tituloBanca.innerHTML = "Banca:"
+                banca.innerHTML += `<p>(valor: ${baralho.valor}) ${baralho.carta} de ${baralho.naipe}</p>`;
+                pontosBanca = pontosBanca + baralho.valor
+                console.log(`Pontos jogador: ${pontosJogador}`);
+                console.log(`Pontos banca: ${pontosBanca}`);
+
+                if (pontosBanca == 7.5) {
+                    resultado = 5;
+                    mensagemFinal()
+                }
+                else if (pontosBanca <= pontosJogador) {
+                    jogar();
+                } else if (pontosBanca > pontosJogador && pontosBanca < 7.5) {
+                    resultado = 2;
+                    mensagemFinal()
+                } else if (pontosBanca > 7.5) {
+                    resultado = 3;
+                    mensagemFinal()
+                }
+            }
+        }
+    }
+
+    function mensagemFinal() {
+
+        if (resultado == 1) {
+            final.innerHTML = "O usuário estourou!"
+        } else if (resultado == 2) {
+            final.innerHTML = "A banca ganhou!"
+        } else if (resultado == 3) {
+            final.innerHTML = "A banca estourou!"
+        } else if (resultado == 4) {
+            final.innerHTML = "O JOGADOR GANHOU COM SETTE E MEZZO!"
+        } else if (resultado == 5) {
+            final.innerHTML = "A BANCA GANHOU COM SETTE E MEZZO!"
+        }
+
+    }
+</script>
