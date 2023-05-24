@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Antiquário Velho Valioso</title>
+</head>
+
+<body>
+  <h1>Antiquário Velho Valioso</h1>
+
+  <h2>Cadastro</h2>
+  <label for="ipt_codigo">Código da Peça:</label>
+  <input type="number" id="ipt_codigo" /><br />
+  <label for="ipt_valor">Valor da Peça:</label>
+  <input type="number" id="ipt_valor" /><br />
+  <button onclick="cadastrar()">Cadastrar</button>
+
+  <h2>Ajuste de Preço</h2>
+  <label for="ipt_codigoInicial">Código da Peça Inicial:</label>
+  <input type="number" id="ipt_codigoInicial" /><br />
+  <label for="ipt_codigoFinal">Código da Peça Final:</label>
+  <input type="number" id="ipt_codigoFinal" /><br />
+  <label for="ipt_percentual">Percentual de Reajuste:</label>
+  <input type="number" id="ipt_percentual" /><br />
+  <button onclick="ajustar()">Ajustar</button>
+
+  <h2>Lista de Peças Ajustadas</h2>
+  <div id="retornoPecasAjustadas">
+    <h3 id="tituloPecasAjustadas"></h3>
+  </div>
+
+  <h2>Resumo do Ajuste</h2>
+  <div id="retornoResumo"></div>
+</body>
+
+</html>
+<script>
+  var codigoProdutos = [];
+  var valorProdutos = [];
+
+  function cadastrar() {
+    var codigo = Number(ipt_codigo.value);
+    var valor = Number(ipt_valor.value);
+    var erro = false;
+
+    ipt_valor.value = "";
+    ipt_codigo.value = "";
+
+    if (codigo < 1000 || codigo > 3999) {
+      alert("O código deve estar entre 1000 e 3999")
+      erro == true;
+    }
+
+    if (valor < 100) {
+      alert("O valor deve ser maior ou igual a 100")
+      erro = true
+    }
+
+    if (erro == false) {
+      codigoProdutos.push(codigo);
+      valorProdutos.push(valor);
+
+      console.log(codigoProdutos);
+      console.log(valorProdutos);
+    }
+  }
+
+  function ajustar() {
+    var codigoInicial = Number(ipt_codigoInicial.value);
+    var codigoFinal = Number(ipt_codigoFinal.value);
+    var percentual = Number((ipt_percentual.value / 100) + 1);
+    var erro = false;
+    var registrosAjustados = 0;
+    var valorTotalPecasAjustadas = 0;
+    var menorValor = 0
+
+    ipt_codigoInicial.value = "";
+    ipt_codigoFinal.value = "";
+    ipt_percentual.value = "";
+    
+    if (percentual == 0) {
+      alert("Entre com o percentual de ajuste")
+      erro = true;
+    }
+
+    if (codigoProdutos.length == 0) {
+      alert("O ajuste é realizado somente após o cadastramento das peças")
+      erro = true;
+    }
+
+
+    if (erro == false) {
+
+      for (var i = 0; i < codigoProdutos.length; i++) {
+        if (codigoProdutos[i] >= codigoInicial && codigoProdutos[i] <= codigoFinal) {
+          valorProdutos[i] = valorProdutos[i] * percentual;
+          registrosAjustados++
+          valorTotalPecasAjustadas = valorTotalPecasAjustadas + valorProdutos[i]
+        }
+      }
+
+      for (var i = 0; i < codigoProdutos.length; i++) {
+  
+        if (menorValor == 0) {
+          menorValor = valorProdutos[i]
+        } else if (valorProdutos[i] < menorValor) {
+          menorValor = valorProdutos[i]
+        }
+      }
+  
+      console.log(codigoProdutos);
+      console.log(valorProdutos);
+  
+      for (var i = 0; i < codigoProdutos.length; i++) {
+        if (codigoProdutos[i] >= codigoInicial && codigoProdutos[i] <= codigoFinal) {
+          tituloPecasAjustadas.innerHTML = `Lista para conferência de estoque`
+          retornoPecasAjustadas.innerHTML += `<p>Código da peça = ${codigoProdutos[i]} - Valor Anterior: ${(valorProdutos[i] / percentual).toFixed(2)} - Valor Ajustado ${valorProdutos[i].toFixed(2)}</p>`
+        }
+      }
+  
+      retornoResumo.innerHTML = `
+      <h3>RESUMO DO AJUSTE das Peças de ${codigoInicial} até ${codigoFinal} </h3>
+      <p>Total de registros justados: ${registrosAjustados}</p>
+      <p>Valor total das peças com preço ajustado: ${valorTotalPecasAjustadas.toFixed(2)}</p>
+      <p>Valor médio das peças com preço ajustado: ${(valorTotalPecasAjustadas / registrosAjustados).toFixed(2)}</p>
+      <p>Menor valor após o ajuste: ${(menorValor).toFixed(2)}</p>
+      `
+    }
+
+
+  }
+
+</script>
