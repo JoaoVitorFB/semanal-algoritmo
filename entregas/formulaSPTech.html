@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Quantidade de carros que irão participar do grid: <input type="text" id="iptQtdCarros"><button
+        onclick="inserirPilotos()">Inserir nome dos pilotos</button>
+    <div id="divNomesPilotos"></div>
+</body>
+
+</html>
+<script>
+    var qtdCarros = 0;
+    var nomePilotos = ["Joao", "Maria", "José", "Anderson", "Pablo"];
+    var combustivelGasto = {
+        velocidadeVolta: [],
+        combustivelVolta: [],
+        combustivelRestante: []
+    }
+    
+    var velocidade = 0;
+    var combustivelGasto = 0;
+    var combustivelRestante = 0;
+    var voltaX = 0;
+
+    function inserirPilotos() {
+
+        qtdCarros = Number(iptQtdCarros.value);
+
+        if (qtdCarros < 5 || qtdCarros > 12) {
+            alert("A quantidade de carros deve estar entre 5 e 12.")
+        } else {
+
+
+            for (let i = 1; i <= qtdCarros; i++) {
+                divNomesPilotos.innerHTML += `
+                <p>Nome piloto ${i}:<p>
+                    <input type="text" id="iptNomePiloto${i}"><br><br>`
+            }
+
+            divNomesPilotos.innerHTML += `<button onclick="cadastrarPilotos()">Cadastrar Pilotos</button>`;
+        }
+    }
+
+    function cadastrarPilotos() {
+        for (let i = 1; i <= qtdCarros; i++) {
+
+            var pilotoAtual = `iptNomePiloto${i}.value`
+            nomePilotos.push(pilotoAtual)
+            console.log(nomePilotos)
+        }
+    }
+
+    function corrida() {
+        
+        for (let z = 0; z < 15; z++){
+            voltaX++
+            for (let i = 0; i < nomePilotos.length; i++) {
+                velocidadeVolta()
+                combustivelGasto = (velocidade * 5) / 250
+
+                if (voltaX == 1) {
+                    combustivelRestante = 75 - combustivelGasto
+                } else {
+                    combustivelRestante = voltas.combustivelRestante[voltas.combustivelRestante.length - 1] - combustivelGasto
+                }
+
+
+
+
+                voltas.velocidadeVolta.push(Number(velocidade));
+                voltas.combustivelVolta.push(Number(combustivelGasto));
+                voltas.combustivelRestante.push(Number(combustivelRestante));
+            }
+        }
+        console.log(voltas.velocidadeVolta)
+        console.log(voltas.combustivelVolta)
+        console.log(voltas.combustivelRestante)
+    }
+
+
+    function velocidadeVolta() {
+        velocidade = (Math.random() * 80 + 210).toFixed(0)
+    }
+</script>
