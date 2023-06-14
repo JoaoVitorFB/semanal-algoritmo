@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
 
     <button onclick="ordenar()">Ordenar</button>
     <div id="div_mensagem"></div>
 
 </body>
+
 </html>
 
 <script>
     var lista = [10, 52, 23, 31, 67, 83, 70, 0, -9, 49]
     var listaTemp = []
-    var menorNumero = +Infinity
-    var tamanhoVetor = lista.lenght
-
-
+    
     function ordenar() {
+        
+        
+        for (let i = 0; i < lista.length; i++) {
 
+           var menorNumero = Infinity
+           var posMenorNumero = 0;
 
-        for (let i = 0; i < lista.length; i++){
-            menorNumeroAtual()
-        }
-
-        listaTemp.push(menorNumero)
-
-        var maiorNumeroTemp = menorNumero
-
-        console.log(`Lista: ${menorNumero}`)
-        console.log(`Lista temporária: ${maiorNumeroTemp}`)
-    }
-
-    function menorNumeroAtual(){
-        for (let i = 0; i < lista.length; i++){
-            if (lista[i] <= menorNumero){
-                menorNumero = lista[i]
+            for (let x = 0; x < lista.length; x++) {
+                if (lista[x] <= menorNumero) {
+                    menorNumero = lista[x]
+                    posMenorNumero = x
+                }
             }
+
+            delete lista[posMenorNumero]
+            listaTemp.push(menorNumero)
         }
+
+        lista = listaTemp
+
+        console.log(`Lista: ${lista}`)
+ 
     }
+
 </script>
